@@ -1,0 +1,96 @@
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 60 30% 98%;
+    --foreground: 280 10% 20%;
+    
+    --card: 60 30% 98%;
+    --card-foreground: 280 10% 20%;
+    
+    --popover: 60 30% 98%;
+    --popover-foreground: 280 10% 20%;
+    
+    --primary: 280 50% 70%;
+    --primary-foreground: 60 30% 98%;
+    
+    --secondary: 40 30% 85%;
+    --secondary-foreground: 280 10% 20%;
+    
+    --muted: 40 30% 90%;
+    --muted-foreground: 280 5% 40%;
+    
+    --accent: 20 30% 85%;
+    --accent-foreground: 280 10% 20%;
+    
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 60 30% 98%;
+
+    --border: 280 20% 85%;
+    --input: 280 20% 85%;
+    --ring: 280 50% 70%;
+    
+    --radius: 0.75rem;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+}
+
+@layer components {
+  .emotional-button {
+    @apply relative overflow-hidden rounded-lg bg-white transition-all duration-300 hover:shadow-lg;
+  }
+
+  .emotional-button::before {
+    content: '';
+    @apply absolute inset-0 bg-gradient-to-r from-purple-100 to-transparent opacity-0 transition-opacity duration-300;
+  }
+
+  .emotional-button:hover::before {
+    @apply opacity-20;
+  }
+
+  .journal-card {
+    @apply rounded-lg bg-white p-6 shadow-md transition-all duration-300 hover:shadow-lg;
+  }
+
+  .affirmation-card {
+    @apply relative overflow-hidden rounded-lg bg-gradient-to-br from-purple-100 to-pink-50 p-8 shadow-md;
+  }
+
+  .breathing-exercise {
+    @apply flex h-32 w-32 items-center justify-center rounded-full bg-purple-100 p-12 shadow-md transition-all duration-700 hover:shadow-lg animate-breathe;
+  }
+
+  .energy-map-day {
+    @apply h-12 w-12 cursor-pointer rounded-lg transition-all duration-300 hover:scale-105;
+  }
+
+  .meditation-container {
+    @apply flex min-h-[300px] flex-col items-center justify-center rounded-xl bg-gradient-to-br from-purple-50 to-pink-50 p-8 shadow-lg transition-all duration-300;
+  }
+
+  .welcome-card {
+    @apply rounded-xl bg-white bg-opacity-90 p-8 shadow-lg backdrop-blur-sm transition-all duration-300 hover:shadow-xl;
+  }
+
+  .nav-link {
+    @apply relative rounded-lg px-3 py-2 text-sm font-medium text-gray-700 transition-colors hover:bg-primary/10;
+  }
+
+  .nav-link-active::after {
+    content: '';
+    @apply absolute bottom-0 left-0 right-0 h-0.5 bg-primary;
+  }
+}
