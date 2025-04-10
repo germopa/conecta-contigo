@@ -1,112 +1,71 @@
-
 import React, { useState, useEffect } from "react";
-import { motion } from "framer-motion";
-import { format, startOfWeek, addDays } from "date-fns";
-import { es } from "date-fns/locale";
+import dayjs from "dayjs";
 
 const emotions = {
-  calm: { color: "bg-blue-200", label: "Calma" },
-  happy: { color: "bg-yellow-200", label: "Felicidad" },
-  energetic: { color: "bg-green-200", label: "Energía" },
-  reflective: { color: "bg-purple-200", label: "Reflexión" },
-  tired: { color: "bg-gray-200", label: "Cansancio" },
+  tranquilo: "bg-blue-300",
+  energetico: "bg-yellow-300",
+  cansado: "bg-gray-400",
+  ansioso: "bg-red-300",
+  feliz: "bg-green-300",
 };
 
 const EnergyMap = () => {
-  const [energyData, setEnergyData] = useState({});
+  const [data, setData] = useState({});
+  const today = dayjs().format("YYYY-MM-DD");
 
+  // cargar datos guardados
   useEffect(() => {
-    const savedData = localStorage.getItem("energyMapData");
-    if (savedData) {
-      setEnergyData(JSON.parse(savedData));
-    }
+    const saved = localStorage.getItem("energy-map");
+    if (saved) setData(JSON.parse(saved));
   }, []);
 
-  const saveEmotion = (date, emotion) => {
-    const newData = {
-      ...energyData,
-      [date]: emotion,
-    };
-    setEnergyData(newData);
-    localStorage.setItem("energyMapData", JSON.stringify(newData));
+  // guardar datos cada vez que cambien
+  useEffect(() => {
+    localStorage.setItem("energy-map", JSON.stringify(data));
+  }, [data]);
+
+  const handleSelect = (emotion) => {
+    setData({ ...data, [today]: emotion });
   };
 
-  const getWeekDays = () => {
-    const start = startOfWeek(new Date(), { weekStartsOn: 1 });
-    return Array.from({ length: 7 }, (_, i) => addDays(start, i));
-  };
+  // genera los últimos 30 días
+  const days = Array.from({ length: 30 }, (_, i) =>
+    dayjs().subtract(i, "day").format("YYYY-MM-DD")
+  ).reverse();
 
   return (
-    <div className="space-y-8">
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        className="text-center"
-      >
-        <h1 className="mb-4 text-3xl font-bold text-gray-800">
-          Tu Mapa de Energía
-        </h1>
-        <p className="text-gray-600">
-          Observa y registra tus estados energéticos
-        </p>
-      </motion.div>
+    <div className="p-6 space-y-6">
+      <h1 className="text-2xl font-bold text-center text-purple-800">🧭 Mapa Energético</h1>
+      <p className="text-center text-gray-600">
+        ¿Cómo te sientes hoy? Selecciona tu estado emocional.
+      </p>
 
-      <div className="rounded-lg bg-white p-6 shadow-md">
-        <div className="mb-8 grid grid-cols-7 gap-4">
-          {getWeekDays().map((date) => {
-            const dateStr = format(date, "yyyy-MM-dd");
-            const emotion = energyData[dateStr];
+      <div className="flex flex-wrap justify-center gap-2">
+        {Object.keys(emotions).map((emotion) => (
+          <button
+            key={emotion}
+            onClick={() => handleSelect(emotion)}
+            className={`px-4 py-2 rounded-full text-white capitalize ${emotions[emotion]}`}
+          >
+            {emotion}
+          </button>
+        ))}
+      </div>
 
-            return (
-              <div key={dateStr} className="text-center">
-                <p className="mb-2 text-sm text-gray-500">
-                  {format(date, "EEEE", { locale: es })}
-                </p>
-                <motion.div
-                  whileHover={{ scale: 1.1 }}
-                  className="mx-auto"
-                >
-                  <div
-                    className={`energy-map-day ${
-                      emotion ? emotions[emotion].color : "bg-gray-100"
-                    }`}
-                    onClick={() => {
-                      const nextEmotion = !emotion
-                        ? "calm"
-                        : emotion === "calm"
-                        ? "happy"
-                        : emotion === "happy"
-                        ? "energetic"
-                        : emotion === "energetic"
-                        ? "reflective"
-                        : emotion === "reflective"
-                        ? "tired"
-                        : null;
-                      if (nextEmotion) saveEmotion(dateStr, nextEmotion);
-                    }}
-                  />
-                </motion.div>
-                {emotion && (
-                  <p className="mt-2 text-xs text-gray-600">
-                    {emotions[emotion].label}
-                  </p>
-                )}
-              </div>
-            );
-          })}
-        </div>
-
-        <div className="flex flex-wrap justify-center gap-4">
-          {Object.entries(emotions).map(([key, { color, label }]) => (
-            <div key={key} className="flex items-center space-x-2">
-              <div className={`h-4 w-4 rounded ${color}`} />
-              <span className="text-sm text-gray-600">{label}</span>
-            </div>
-          ))}
-        </div>
+      <div className="grid grid-cols-5 sm:grid-cols-7 gap-3 mt-6">
+        {days.map((date) => (
+          <div
+            key={date}
+            className={`w-12 h-12 rounded flex items-center justify-center text-xs font-semibold text-white ${
+              emotions[data[date]] || "bg-gray-200 text-gray-600"
+            }`}
+          >
+            {dayjs(date).format("DD")}
+          </div>
+        ))}
       </div>
     </div>
   );
-}
+};
 
 export default EnergyMap;
