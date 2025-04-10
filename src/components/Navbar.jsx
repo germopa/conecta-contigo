@@ -1,4 +1,3 @@
-
 import React from "react";
 import { Link, useLocation } from "react-router-dom";
 import { motion } from "framer-motion";
@@ -16,13 +15,13 @@ const Navbar = () => {
   ];
 
   return (
-    <nav className="sticky top-0 z-50 bg-white/80 backdrop-blur-sm">
+    <nav className="sticky top-0 z-50 bg-white/80 backdrop-blur-sm shadow-sm">
       <div className="container mx-auto px-4">
-        <div className="flex h-16 items-center justify-between">
-          <Link to="/" className="text-2xl font-semibold text-primary">
+        <div className="flex flex-col md:flex-row md:justify-between items-center py-2">
+          <Link to="/" className="text-2xl font-semibold text-primary mb-2 md:mb-0">
             Conecta Contigo
           </Link>
-          <div className="flex space-x-1">
+          <div className="flex flex-wrap justify-center gap-2 overflow-x-auto w-full md:w-auto">
             {links.map(({ to, icon: Icon, label }) => (
               <Link
                 key={to}
@@ -52,6 +51,6 @@ const Navbar = () => {
       </div>
     </nav>
   );
-}
+};
 
 export default Navbar;
