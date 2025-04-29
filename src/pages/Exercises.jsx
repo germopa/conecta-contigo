@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
@@ -18,6 +17,21 @@ const exercises = [
     title: "Visualización Sanadora",
     description: "Imagina una luz cálida que recorre y sana tu cuerpo",
     duration: 120,
+  },
+  {
+    title: "Deja Ir en 60 segundos",
+    description: "Aprieta tus manos 5 segundos, suelta y di: 'Lo dejo ir ahora'.",
+    duration: 60,
+  },
+  {
+    title: "¿Qué quiero sembrar hoy?",
+    description: "Cierra los ojos, imagina una semilla brillando en tu corazón y piensa en una intención positiva para el día.",
+    duration: 120,
+  },
+  {
+    title: "Reconecta con tu cuerpo en movimiento",
+    description: "Sacude suavemente brazos, piernas y cuello para liberar energía estancada, luego siente tu cuerpo vibrar.",
+    duration: 90,
   },
 ];
 
