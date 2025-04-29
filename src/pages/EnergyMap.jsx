@@ -1,69 +1,77 @@
-import React, { useState, useEffect } from "react";
-import dayjs from "dayjs";
+import React, { useState } from "react";
+import { motion } from "framer-motion";
 
-const emotions = {
-  tranquilo: "bg-blue-300",
-  energetico: "bg-yellow-300",
-  cansado: "bg-gray-400",
-  ansioso: "bg-red-300",
-  feliz: "bg-green-300",
-};
+const energyLevels = [
+  { label: "Alta", color: "bg-green-400" },
+  { label: "Media", color: "bg-yellow-400" },
+  { label: "Baja", color: "bg-red-400" },
+  { label: "Estable", color: "bg-blue-400" },
+  { label: "Inestable", color: "bg-purple-400" },
+];
 
 const EnergyMap = () => {
-  const [data, setData] = useState({});
-  const today = dayjs().format("YYYY-MM-DD");
+  const [selectedDay, setSelectedDay] = useState(null);
+  const [dayEnergies, setDayEnergies] = useState({});
 
-  // cargar datos guardados
-  useEffect(() => {
-    const saved = localStorage.getItem("energy-map");
-    if (saved) setData(JSON.parse(saved));
-  }, []);
+  const daysInMonth = 30; // Simplificado para el ejemplo
 
-  // guardar datos cada vez que cambien
-  useEffect(() => {
-    localStorage.setItem("energy-map", JSON.stringify(data));
-  }, [data]);
-
-  const handleSelect = (emotion) => {
-    setData({ ...data, [today]: emotion });
+  const handleSelectEnergy = (energy) => {
+    setDayEnergies((prev) => ({
+      ...prev,
+      [selectedDay]: energy,
+    }));
+    setSelectedDay(null);
   };
 
-  // genera los últimos 30 días
-  const days = Array.from({ length: 30 }, (_, i) =>
-    dayjs().subtract(i, "day").format("YYYY-MM-DD")
-  ).reverse();
-
   return (
-    <div className="p-6 space-y-6">
-      <h1 className="text-2xl font-bold text-center text-purple-800">🧭 Mapa Energético</h1>
-      <p className="text-center text-gray-600">
-        ¿Cómo te sientes hoy? Selecciona tu estado emocional.
-      </p>
+    <div className="flex flex-col items-center justify-center min-h-screen px-6 py-10 bg-gradient-to-b from-blue-100 via-white to-blue-50">
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        className="text-center mb-8"
+      >
+        <h1 className="text-3xl font-bold text-blue-700">Mapa Energético</h1>
+        <p className="text-gray-600">Selecciona el nivel de energía para cada día</p>
+      </motion.div>
 
-      <div className="flex flex-wrap justify-center gap-2">
-        {Object.keys(emotions).map((emotion) => (
-          <button
-            key={emotion}
-            onClick={() => handleSelect(emotion)}
-            className={`px-4 py-2 rounded-full text-white capitalize ${emotions[emotion]}`}
-          >
-            {emotion}
-          </button>
-        ))}
+      <div className="grid grid-cols-5 gap-3">
+        {Array.from({ length: daysInMonth }, (_, index) => {
+          const day = index + 1;
+          const energy = dayEnergies[day];
+          return (
+            <div
+              key={day}
+              className={`h-16 w-16 flex items-center justify-center rounded-lg border ${energy ? energy.color : "bg-white hover:bg-gray-50"} cursor-pointer`}
+              onClick={() => setSelectedDay(day)}
+            >
+              <span className="text-gray-800 font-semibold">{day}</span>
+            </div>
+          );
+        })}
       </div>
 
-      <div className="grid grid-cols-5 sm:grid-cols-7 gap-3 mt-6">
-        {days.map((date) => (
-          <div
-            key={date}
-            className={`w-12 h-12 rounded flex items-center justify-center text-xs font-semibold text-white ${
-              emotions[data[date]] || "bg-gray-200 text-gray-600"
-            }`}
-          >
-            {dayjs(date).format("DD")}
+      {selectedDay && (
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="mt-8 p-6 bg-white rounded-lg shadow-md text-center"
+        >
+          <h2 className="text-xl font-bold text-gray-800 mb-4">
+            Selecciona la energía para el día {selectedDay}
+          </h2>
+          <div className="flex flex-wrap justify-center gap-4">
+            {energyLevels.map((level) => (
+              <button
+                key={level.label}
+                onClick={() => handleSelectEnergy(level)}
+                className={`px-4 py-2 rounded-full text-white ${level.color} hover:brightness-110`}
+              >
+                {level.label}
+              </button>
+            ))}
           </div>
-        ))}
-      </div>
+        </motion.div>
+      )}
     </div>
   );
 };
