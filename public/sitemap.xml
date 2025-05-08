@@ -1,21 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-
   <url>
     <loc>https://www.reflexioncontigo.com/</loc>
     <lastmod>2025-05-08</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
-
-  <!-- Ejemplo de otra página que tengas (si aplicas rutas dinámicas o estáticas) -->
-  <!--
-  <url>
-    <loc>https://www.reflexioncontigo.com/frases</loc>
-    <lastmod>2025-05-08</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  -->
-
 </urlset>
+
