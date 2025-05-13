@@ -1,4 +1,3 @@
-
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { Toaster } from "@/components/ui/toaster";
@@ -8,6 +7,7 @@ import Journal from "@/pages/Journal";
 import Affirmations from "@/pages/Affirmations";
 import Exercises from "@/pages/Exercises";
 import EnergyMap from "@/pages/EnergyMap";
+import EmotionalWheel from "@/pages/EmotionalWheel"; // ✅ nuevo import
 
 function App() {
   return (
@@ -20,6 +20,7 @@ function App() {
             <Route path="/journal" element={<Journal />} />
             <Route path="/affirmations" element={<Affirmations />} />
             <Route path="/exercises" element={<Exercises />} />
+            <Route path="/emotional-wheel" element={<EmotionalWheel />} /> {/* ✅ nueva ruta */}
             <Route path="/energy-map" element={<EnergyMap />} />
           </Routes>
         </main>
