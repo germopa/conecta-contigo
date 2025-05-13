@@ -1,7 +1,7 @@
 import React from "react";
 import { Link, useLocation } from "react-router-dom";
 import { motion } from "framer-motion";
-import { Heart, Book, Sun, Wind, Calendar } from "lucide-react";
+import { Heart, Book, Sun, Wind, Calendar, Smile } from "lucide-react";
 
 const Navbar = () => {
   const location = useLocation();
@@ -11,17 +11,18 @@ const Navbar = () => {
     { to: "/journal", icon: Book, label: "Diario" },
     { to: "/affirmations", icon: Sun, label: "Afirmaciones" },
     { to: "/exercises", icon: Wind, label: "Ejercicios" },
+    { to: "/emotional-wheel", icon: Smile, label: "Rueda Emocional" },
     { to: "/energy-map", icon: Calendar, label: "Mapa Energético" },
   ];
 
   return (
-    <nav className="sticky top-0 z-50 bg-white/80 backdrop-blur-sm shadow-sm">
+    <nav className="sticky top-0 z-50 bg-white/80 backdrop-blur-sm">
       <div className="container mx-auto px-4">
-        <div className="flex flex-col md:flex-row md:justify-between items-center py-2">
-          <Link to="/" className="text-2xl font-semibold text-primary mb-2 md:mb-0">
+        <div className="flex h-16 items-center justify-between">
+          <Link to="/" className="text-2xl font-semibold text-primary">
             Conecta Contigo
           </Link>
-          <div className="flex flex-wrap justify-center gap-2 overflow-x-auto w-full md:w-auto">
+          <div className="flex space-x-1 overflow-x-auto">
             {links.map(({ to, icon: Icon, label }) => (
               <Link
                 key={to}
