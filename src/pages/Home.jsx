@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
+import { useTranslation } from "react-i18next";
 
 const frasesDelDia = [
   "Hoy elijo soltar lo que no puedo controlar 🌿",
@@ -36,6 +37,7 @@ const frasesDelDia = [
 ];
 
 const Home = () => {
+  const { t, i18n } = useTranslation();
   const [frase, setFrase] = useState("");
 
   useEffect(() => {
@@ -52,11 +54,20 @@ const Home = () => {
         transition={{ duration: 1 }}
         className="max-w-2xl space-y-8"
       >
-        <h1 className="text-4xl font-bold text-white drop-shadow-md">✨ Conecta Contigo</h1>
+        {/* Botón para cambiar idioma */}
+        <div className="flex justify-end w-full">
+          <button
+            onClick={() => i18n.changeLanguage(i18n.language === "es" ? "en" : "es")}
+            className="text-white text-sm underline"
+          >
+            {i18n.language === "es" ? "Switch to English" : "Cambiar a Español"}
+          </button>
+        </div>
 
-        {/* Agregado para SEO visible */}
+        <h1 className="text-4xl font-bold text-white drop-shadow-md">{t("titulo")}</h1>
+
         <h2 className="text-2xl text-white/90 font-medium">
-          Ejercicios mentales y frases para tu bienestar emocional
+          {t("subtitulo")}
         </h2>
 
         <p className="text-2xl text-white italic font-semibold">
@@ -64,7 +75,7 @@ const Home = () => {
         </p>
 
         <p className="text-white/90 text-lg">
-          Dedica 60 segundos a reconectar contigo mismo. Aquí encontrarás frases positivas, ejercicios mentales breves y herramientas para mejorar tu claridad emocional, reducir el estrés y vivir en equilibrio.
+          {t("descripcion")}
         </p>
 
         <div className="flex flex-col gap-4">
@@ -72,20 +83,20 @@ const Home = () => {
             to="/journal"
             className="bg-white text-purple-700 px-8 py-4 rounded-full shadow-lg text-lg font-semibold hover:bg-purple-100 transition"
           >
-            Iniciar mi Reconexión
+            {t("iniciar")}
           </Link>
           <div className="flex flex-col gap-3 mt-4">
             <Link
               to="/affirmations"
               className="bg-purple-100 text-purple-800 px-6 py-3 rounded-full hover:bg-purple-200 transition"
             >
-              Leer afirmaciones
+              {t("afirmaciones")}
             </Link>
             <Link
               to="/exercises"
               className="bg-purple-300 text-purple-900 px-6 py-3 rounded-full hover:bg-purple-400 transition"
             >
-              Respirar y reconectar
+              {t("respirar")}
             </Link>
           </div>
         </div>
