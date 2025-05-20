@@ -54,12 +54,17 @@ const Home = () => {
       >
         <h1 className="text-4xl font-bold text-white drop-shadow-md">✨ Conecta Contigo</h1>
 
+        {/* Agregado para SEO visible */}
+        <h2 className="text-2xl text-white/90 font-medium">
+          Ejercicios mentales y frases para tu bienestar emocional
+        </h2>
+
         <p className="text-2xl text-white italic font-semibold">
           “{frase}”
         </p>
 
         <p className="text-white/90 text-lg">
-          Tu espacio para soltar lo que pesa, reconectar con tu esencia y dar el primer paso hacia tu bienestar interior. 🌿
+          Dedica 60 segundos a reconectar contigo mismo. Aquí encontrarás frases positivas, ejercicios mentales breves y herramientas para mejorar tu claridad emocional, reducir el estrés y vivir en equilibrio.
         </p>
 
         <div className="flex flex-col gap-4">
